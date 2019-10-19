@@ -3,6 +3,8 @@ from setuptools import setup, find_packages
 requires = [
     'flask',
     'flask-sqlalchemy',
+    'json',
+    'datetime'
 ]
 
 setup(
