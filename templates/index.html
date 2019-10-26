@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Flask Tutorial</title>
+  </head>
+  <body>
+    {% extends "template.html" %}
+    {% block content %}
+
+    <p><p>
+    <a href="{{ url_for('.new_album') }}"> New Album </a>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% from "_formhelpers.html" import render_field %}
+    <form method=post>
+      <dl>
+        {{ render_field(form.select) }}
+        <p>
+        {{ render_field(form.search) }}
+      </dl>
+      <p><input type=submit value=Search>
+    </form>
+
+    {% endblock %}
+  </body>
+</html>

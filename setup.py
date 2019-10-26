@@ -5,7 +5,7 @@ requires = [
     'flask-sqlalchemy',
     'Flask-WTF',
     'easypost',
-    'sqlite3'
+    'flask_table'
 ]
 
 setup(
