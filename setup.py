@@ -4,7 +4,8 @@ requires = [
     'flask',
     'flask-sqlalchemy',
     'Flask-WTF',
-    'easypost'
+    'easypost',
+    'sqlite3'
 ]
 
 setup(

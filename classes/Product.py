@@ -1,5 +1,14 @@
 class Product:
-	def __init__(self, inIdentity = -1, inWeight = 0, inPrice = 0, inInventoryIdentity = -1, inQuantity = 0, inModelNumber = "", inSerialNumber = [], inInTransit = False, inTransitData = []):
+	def __init__(self,
+			inIdentity = -1,
+			inWeight = 0,
+			inPrice = 0,
+			inInventoryIdentity = -1,
+			inQuantity = 0,
+			inModelNumber = "",
+			inSerialNumber = [],
+			inInTransit = False,
+			inTransitData = []):
 		self.identity = inIdentity
 		self.weight = inWeight
 		self.price = inPrice
@@ -21,7 +30,11 @@ class Product:
 		inTransit = product["inTransit"]
 		transitData = product["transitData"]
 
-		return Product(identity, weight, price, inventoryIdentity, quantity, modelNumber, serialNumber, inTransit, transitData)
+		return Product(identity, weight, price, inventoryIdentity,
+			quantity, modelNumber, serialNumber, inTransit, transitData)
 
 	def serialize(self):
-		return {"identity": self.identity, "weight": self.weight, "price": self.price, "inventoryIdentity": self.inventoryIdentity, "quantity": self.quantity, "modelNumber": self.modelNumber, "serialNumber": self.serialNumber}
+		return {"identity": self.identity, "weight": self.weight,
+			"price": self.price, "inventoryIdentity": self.inventoryIdentity,
+			"quantity": self.quantity, "modelNumber": self.modelNumber,
+			"serialNumber": self.serialNumber}

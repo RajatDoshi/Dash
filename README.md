@@ -27,3 +27,6 @@ http://www.blog.pythonlibrary.org/2017/12/14/flask-101-adding-editing-and-displa
 
 EasyPost for estimating shipping rates:
 https://www.easypost.com/docs/api
+
+Address data:
+https://gist.github.com/HeroicEric/1102788

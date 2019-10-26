@@ -1,7 +1,11 @@
 from Location import Location
 
 class Inventory:
-	def __init__(self, inIdentity = -1, inLocation = Location(), inProducts = [], inWarehouse = False, inCompanyID = -1):
+	def __init__(self, inIdentity = -1,
+			inLocation = Location(),
+			inProducts = [],
+			inWarehouse = False,
+			inCompanyID = -1):
 		self.identity = inIdentity
 		self.location = inLocation
 		self.products = inProducts
@@ -18,4 +22,6 @@ class Inventory:
 		return Inventory(identity, location, products, warehouse, companyID)
 
 	def serialize(self):
-		return {"identity": self.identity, "location": self.location, "products": self.products, "warehouse", self.warehouse, "companyID": self.companyID}
+		return {"identity": self.identity, "location": self.location,
+			"products": self.products, "warehouse", self.warehouse,
+			"companyID": self.companyID}

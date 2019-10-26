@@ -138,20 +138,12 @@ class Shipment(object):
         return rates
 
 shipment = Shipment(
-    to_address=Address('911 9th St', 'West Palm Beach', 'FL', '33401', 'US'),
-    from_address = Address('417 MONTGOMERY Street', 'San Francisco', 'CA', '94104', 'US'),
+    to_address=Address('1415 North Ave', 'Bridgeport', 'CT', '06604', 'US'),
+    from_address = Address('15 Prospect Street', 'New Haven', 'CT', '06511', 'US'),
     parcel = Parcel(10, 10, 10, 10)
 )
-
-# Address('1702 West Cleveland Street', 'Tampa', 'FL', '33606', 'US'),
-
-# start = time.time()
-# for i in range(100):
-#     Parcel.from_id('prcl_8895b611a8b54615ad613b96e77eb05b')
-#
-# print((time.time() - start)/ 100)
-
 pprint(shipment.get_rates())
+
 # print(shipment.get_id())
 
 # start = time.time()
