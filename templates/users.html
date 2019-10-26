@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Users</title>
+  </head>
+  <body>
+    {% extends "template.html" %}
+    {% block content %}
+
+    <h1>Users Page</h1>
+
+    <h4>Create User</h4>
+
+    {% from "_formhelpers.html" import render_field %}
+    <form method=post>
+        <dl>
+            {{ render_field(form.name) }}
+            {{ render_field(form.street) }}
+            {{ render_field(form.city) }}
+            {{ render_field(form.state) }}
+            {{ render_field(form.country) }}
+            {{ render_field(form.user_type) }}
+        </dl>
+        <p><input type=submit value=Submit>
+    </form>
+
+    <h4>Users List</h4>
+    {{ table }}
+
+    {% endblock %}
+  </body>
+</html>
