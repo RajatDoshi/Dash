@@ -1,20 +1,12 @@
-from db_creator import Artist, Album, User
-from forms import MusicSearchForm, AlbumForm, UserForm
-from tables import Results, UserResults
+from db_creator import Artist, Album, User, Product, Item
+from forms import MusicSearchForm, AlbumForm, UserForm, ProductForm, ProductSearchForm, ItemForm, ItemSearchForm
+from tables import Results, UserResults, ProductResults, ItemResults
 from app import app
 from db_setup import init_db, db_session
 
 from flask import render_template, request, flash, redirect
 
 # init_db()
-
-# @app.route('/', methods=['GET', 'POST'])
-# def home():
-#     return render_template('home.html')
-#
-# @app.route('/about')
-# def about():
-#     return render_template('about.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -126,21 +118,95 @@ def save_user(user, form, new=True):
 
     db_session.commit()
 
-# @app.route('/user/new_user', methods=['GET', 'POST'])
-# def new_user():
-#     """
-#     Add a new user
-#     """
-#     form = UserForm(request.form)
-#
-#     if request.method == 'POST' and form.validate():
-#         # save the album
-#         user = User()
-#         save_changes(album, form, new=True)
-#         flash('User created successfully!')
-#         return redirect('/')
-#
-#     return render_template('new_album.html', form=form)
+@app.route('/sell', methods=['GET', 'POST'])
+def sell():
+    item_form = ItemForm(request.form)
+
+    if request.method == 'POST' and item_form.validate():
+        item = Item()
+        save_item(item, item_form, new=True)
+        flash('Item created successfully!')
+        return redirect('/sell')
+
+    product_results = db_session.query(Product).all()
+    product_table = ProductResults(product_results)
+    product_table.border = True
+
+    item_results = db_session.query(Item).all()
+    item_table = ItemResults(item_results)
+    item_table.border = True
+
+    return render_template('sell.html',
+        product_table=product_table,
+        item_table=item_table,
+        item_form=item_form)
+
+@app.route('/sell/new_product', methods=['GET', 'POST'])
+def new_product():
+    """
+    Add a new product
+    """
+    form = ProductForm(request.form)
+
+    if request.method == 'POST' and form.validate():
+        # save the album
+        product = Product()
+        save_product(product, form, new=True)
+        flash('Product created successfully!')
+        return redirect('/sell')
+
+    return render_template('new_product.html', form=form)
+
+def save_product(product, form, new=True):
+    product.name = form.name.data
+    product.category = form.category.data
+    product.width = form.width.data
+    product.height = form.height.data
+    product.length = form.length.data
+    product.weight = form.weight.data
+
+    if new:
+        db_session.add(product)
+
+    db_session.commit()
+
+def save_item(item, form, new=True):
+    item.product = form.product.data
+    item.seller = form.seller.data
+    item.price = form.price.data
+    item.quantity = True
+
+    if new:
+        db_session.add(item)
+
+    db_session.commit()
+
+@app.route('/buy', methods=['GET', 'POST'])
+def buy():
+    search = ItemSearchForm(request.form)
+
+    if request.method == 'POST':
+        results = []
+        search_string = search.data['search']
+
+        if search_string:
+            qry = db_session.query(Item).filter(
+                    Item.product.contains(search_string))
+        else:
+            qry = db_session.query(Item)
+
+        results = qry.all()
+
+        if not results:
+            flash('No items found!')
+            return redirect('/buy')
+    else:
+        results = db_session.query(Item).all()
+
+    table = ItemResults(results)
+    table.border = True
+
+    return render_template('buy.html', table=table, form=search)
 
 if __name__ == '__main__':
     app.run(debug=True)

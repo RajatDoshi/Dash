@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, ForeignKey
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Float, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 
@@ -40,6 +40,35 @@ class User(Base):
     zip = Column(String)
     country = Column(String)
     user_type = Column(String)
+
+class Product(Base):
+    __tablename__ = "products"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    category = Column(String)
+    width = Column(Float)
+    height = Column(Float)
+    length = Column(Float)
+    weight = Column(Float)
+
+class Item(Base):
+    __tablename__ = "items"
+
+    id = Column(Integer, primary_key=True)
+
+    # product_id = Column(Integer, ForeignKey("products.id"))
+    # product = relationship("Product", backref=backref(
+    #     "items", order_by=id))
+    #
+    # seller_id = Column(Integer, ForeignKey("users.id"))
+    # seller = relationship("User", backref=backref(
+    #     "items", order_by=id))
+    product = Column(String)
+    seller = Column(String)
+
+    price = Column(Float)
+    quantity = Column(Boolean)
 
 # create tables
 Base.metadata.create_all(engine)

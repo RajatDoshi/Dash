@@ -2,19 +2,14 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Flask Tutorial</title>
+    <title>Dash - Buy</title>
   </head>
   <body>
     {% extends "template.html" %}
     {% block content %}
 
     <p><p>
-
-    <h4>Welcome to Dash Fulfillment!</h4>
-
-    <p>Ignore the forms below (testing only)</p>
-
-    <a href="{{ url_for('.new_album') }}"> New Album </a>
+    <p>This is the buy page!</p>
 
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -26,15 +21,17 @@
       {% endif %}
     {% endwith %}
 
+    <h4>Search Items</h4>
     {% from "_formhelpers.html" import render_field %}
     <form method=post>
       <dl>
-        {{ render_field(form.select) }}
-        <p>
         {{ render_field(form.search) }}
       </dl>
       <p><input type=submit value=Search>
     </form>
+
+    <h4>Results</h4>
+    {{ table }}
 
     {% endblock %}
   </body>

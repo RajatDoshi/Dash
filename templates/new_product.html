@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>New Product</title>
+  </head>
+  <body>
+    {% extends "template.html" %}
+    {% block content %}
+
+    <h1>Products Page</h1>
+
+    <h4>Create Product</h4>
+
+    {% from "_formhelpers.html" import render_field %}
+    <form method=post>
+        <dl>
+            {{ render_field(form.name) }}
+            {{ render_field(form.category) }}
+            {{ render_field(form.width) }}
+            {{ render_field(form.height) }}
+            {{ render_field(form.length) }}
+            {{ render_field(form.weight) }}
+        </dl>
+        <p><input type=submit value=Submit>
+    </form>
+
+    {% endblock %}
+  </body>
+</html>
