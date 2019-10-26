@@ -24,3 +24,6 @@ https://www.freecodecamp.org/news/how-to-build-a-web-application-using-flask-and
 Forms:
 https://www.blog.pythonlibrary.org/2017/12/13/flask-101-how-to-add-a-search-form/
 http://www.blog.pythonlibrary.org/2017/12/14/flask-101-adding-editing-and-displaying-data/
+
+EasyPost for estimating shipping rates:
+https://www.easypost.com/docs/api

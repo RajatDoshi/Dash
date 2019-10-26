@@ -4,8 +4,7 @@ requires = [
     'flask',
     'flask-sqlalchemy',
     'Flask-WTF',
-    'json',
-    'datetime'
+    'easypost'
 ]
 
 setup(
