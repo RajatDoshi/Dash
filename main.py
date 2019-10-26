@@ -1,13 +1,31 @@
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from flask import Response
 from flask_sqlalchemy import SQLAlchemy
+from .models import Buyer
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost:5432/flask_todo'
+
+DATABASE_URL = 'postgres://localhost:5432/flask_todo'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 db = SQLAlchemy(app)
 
+""" Save the changes to the database """
+def save_changes(form, new=False):
+    # Get data from form and assign it to the correct attributes
+    # of the SQLAlchemy table object
+    buyer = Buyer()
+    buyer.id = form.id.data
+    buyer.name = form.name.data
+    buyer.location = form.location.data
+    if new:
+        db.add(buyer)
 
-@app.route('/')
+    # commit the data to the database
+    db.commit()
+
+
+@app.route('/', methods=['GET', 'POST'])
 def home():
     """Print 'Hello, world!' as the response body."""
     return render_template('home.html')
@@ -15,7 +33,8 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html')
-@app.route('/users/data', methods=['POST'])
+
+@app.route('/data', methods=['POST'])
 def changeModel(data):
     db.session.add(data)
     db.session.commit()
