@@ -15,5 +15,5 @@ setup(
     keywords='web flask',
     packages=find_packages(),
     include_package_data=True,
-    install_requires=requires
+    instalsl_requires=requires
 )
