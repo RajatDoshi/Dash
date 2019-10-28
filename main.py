@@ -7,7 +7,7 @@ from shipping import get_shipping_options, get_shipment
 from flask import render_template, request, flash, redirect
 import numpy as np
 
-# init_db()
+init_db()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

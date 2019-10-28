@@ -1,10 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+<<<<<<< Updated upstream
 from db_creator import User, Product, Item
 
 import pandas as pd
 import numpy as np
+=======
+>>>>>>> Stashed changes
 
 engine = create_engine('sqlite:///data.db', convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
@@ -14,6 +17,7 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 def init_db():
+<<<<<<< Updated upstream
     # Base.metadata.create_all(bind=engine)
 
     # users = [('albert', '408 Lakeshore Lane', 'Chapel Hill', 'NC', '27514', 'US', 'Buyer'),
@@ -59,3 +63,6 @@ def init_db():
             seller.items.append(item)
 
     db_session.commit()
+=======
+    Base.metadata.create_all(bind=engine)
+>>>>>>> Stashed changes
