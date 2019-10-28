@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Optimize</title>
+  </head>
+  <body>
+    {% extends "template.html" %}
+    {% block content %}
+
+    <div class="info" style="padding-left: 10%; padding-right: 10%; padding-top : 5%; padding-bottom : 5%;">
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      <h4>Search Items</h4>
+
+      {% from "_formhelpers.html" import render_field %}
+      <form method=post>
+        <dl>
+          {{ render_field(form.search) }}
+        </dl>
+        <p><button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+
+      <h4>Results</h4>
+
+      <h5>Baseline Shipping</h5>
+      <strong><ul>
+        {% for rate in baseline_rates %}
+        <li>{{ rate.service }}: {{ rate.cost }} USD, {{ rate.delivery }} days</li>
+        {% endfor %}
+      </ul></strong>
+
+
+      <div class="table-responsive">
+          <table class="table" id="options">
+              <thead>
+                  <tr>
+                      <th scope="col">Product</th>
+                      <th scope="col">Seller</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Distance (km)</th>
+                      <th scope="col">Rate (USD)</th>
+                      <th scope="col">Delivery (Days)</th>
+                      <th scope="col">Service (USPS)</th>
+                      <th scope="col">Ranking Score</th>
+
+                  </tr>
+              </thead>
+              <tbody>
+              {% for option in results %}
+                  <tr>
+                      <th scope="row">{{ option.product }}</th>
+                      <td> {{ option.seller }} </td>
+                      <td> {{ option.price }} </td>
+                      <td> {{ option.address }} </td>
+                      <td> {{ option.distance }} </td>
+                      <td> {{ option.rate }} </td>
+                      <td> {{ option.delivery }} </td>
+                      <td> {{ option.service }} </td>
+                      <td> {{ option.score }} </td>
+
+                  </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+      </div>
+
+    </div>
+
+    {% endblock %}
+  </body>
+</html>

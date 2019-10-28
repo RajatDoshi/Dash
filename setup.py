@@ -5,13 +5,16 @@ requires = [
     'flask-sqlalchemy',
     'Flask-WTF',
     'easypost',
-    'flask_table'
+    'flask_table',
+    'numpy',
+    'pandas',
+    'googlemaps'
 ]
 
 setup(
-    name='dash',
+    name='yhack19',
     version='0.0',
-    description='Dash web application using Python Flask',
+    description='yhack19 web application using Python Flask',
     keywords='web flask',
     packages=find_packages(),
     include_package_data=True,

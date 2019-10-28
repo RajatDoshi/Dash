@@ -2,44 +2,106 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Dash - Sell</title>
+    <title>Sell</title>
   </head>
   <body>
     {% extends "template.html" %}
     {% block content %}
 
-    <p><p>
-    <p>This is the sell page!</p>
-    <p>Choose from existing products or add a new product category.</p>
+    <div class="info" style="padding-left: 10%; padding-right: 10%; padding-top : 5%; padding-bottom : 5%;">
 
-    <a href="{{ url_for('.new_product') }}"> New Product </a>
+      <p>Choose from existing products or add a new product category.</p>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul class=flashes>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+      <a href="{{ url_for('.new_product') }}"> New Product </a>
+      <br><br>
 
-    <h4>Available Products</h4>
-    {{ product_table }}
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
 
-    <h2>Add Item</h2>
-    {% from "_formhelpers.html" import render_field %}
-    <form method=post>
-      <dl>
-        {{ render_field(item_form.product) }}
-        {{ render_field(item_form.seller) }}
-        {{ render_field(item_form.price) }}
-      </dl>
-      <p><input type=submit value=Submit>
-    </form>
+      <h4>Available Products</h4>
+      <div class="table-responsive">
+        <table class="table" id="products">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Width</th>
+                    <th scope="col">Height</th>
+                    <th scope="col">Length</th>
+                    <th scope="col">Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in product_results %}
+                <tr id={{ product.id }}>
+                    <th scope="row">{{ product.name }}</th>
+                    <td> {{ product.category }} </td>
+                    <td> {{ product.width }} </td>
+                    <td> {{ product.height }} </td>
+                    <td> {{ product.length }} </td>
+                    <td> {{ product.weight }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+      </div>
 
-    <h2>All Items</h2>
-    {{ item_table }}
+      <br><br>
+
+      <h2>Add Item</h2>
+      {% from "_formhelpers.html" import render_field %}
+      <form method=post>
+        <dl>
+          {{ render_field(item_form.product) }}
+          {{ render_field(item_form.seller) }}
+          {{ render_field(item_form.price) }}
+        </dl>
+        <p><button class="btn btn-primary" type="submit">Submit</button>
+          <!-- <input type=submit value=Submit> -->
+      </form>
+
+      <h2>All Items</h2>
+      <div class="table-responsive">
+        <table class="table" id="items">
+            <thead>
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Seller</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">From Street</th>
+                    <th scope="col">From City</th>
+                    <th scope="col">From State</th>
+                    <th scope="col">From ZIP</th>
+                    <th scope="col">From Country</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in item_results %}
+                <tr id={{ item.id }}>
+                    <th scope="row">{{ item.product }}</th>
+                    <td> {{ item.seller }} </td>
+                    <td> {{ item.price }} </td>
+                    <td> {{ item.quantity }} </td>
+                    <td> {{ item.street }} </td>
+                    <td> {{ item.city }} </td>
+                    <td> {{ item.state }} </td>
+                    <td> {{ item.zip }} </td>
+                    <td> {{ item.country }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+      </div>
+
+    </div>
 
     {% endblock %}
   </body>

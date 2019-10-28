@@ -8,22 +8,25 @@
     {% extends "template.html" %}
     {% block content %}
 
-    <h1>Products Page</h1>
+    <div class="info" style="padding-left: 10%; padding-right: 10%; padding-top : 5%; padding-bottom : 5%;">
 
-    <h4>Create Product</h4>
+      <h1>Products Page</h1>
 
-    {% from "_formhelpers.html" import render_field %}
-    <form method=post>
-        <dl>
-            {{ render_field(form.name) }}
-            {{ render_field(form.category) }}
-            {{ render_field(form.width) }}
-            {{ render_field(form.height) }}
-            {{ render_field(form.length) }}
-            {{ render_field(form.weight) }}
-        </dl>
-        <p><input type=submit value=Submit>
-    </form>
+      <h4>Create Product</h4>
+
+      {% from "_formhelpers.html" import render_field %}
+      <form method=post>
+          <dl>
+              {{ render_field(form.name) }}
+              {{ render_field(form.category) }}
+              {{ render_field(form.width) }}
+              {{ render_field(form.height) }}
+              {{ render_field(form.length) }}
+              {{ render_field(form.weight) }}
+          </dl>
+          <p><button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
 
     {% endblock %}
   </body>

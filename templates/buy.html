@@ -2,14 +2,13 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Dash - Buy</title>
+    <title>Buy</title>
   </head>
   <body>
     {% extends "template.html" %}
     {% block content %}
 
-    <p><p>
-    <p>This is the buy page!</p>
+    <div class="info" style="padding-left: 10%; padding-right: 10%; padding-top : 5%; padding-bottom : 5%;">
 
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -22,16 +21,54 @@
     {% endwith %}
 
     <h4>Search Items</h4>
+
     {% from "_formhelpers.html" import render_field %}
     <form method=post>
       <dl>
         {{ render_field(form.search) }}
       </dl>
-      <p><input type=submit value=Search>
+      <p><button class="btn btn-primary" type="submit">Submit</button>
     </form>
 
     <h4>Results</h4>
-    {{ table }}
+
+    <p>Displaying {{ top_results }} of {{ total_results }} results</p>
+
+    <div class="table-responsive">
+        <table class="table" id="items">
+            <thead>
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Seller</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">From Street</th>
+                    <th scope="col">From City</th>
+                    <th scope="col">From State</th>
+                    <th scope="col">From ZIP</th>
+                    <th scope="col">From Country</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr id={{ item.id }}>
+                    <th scope="row">{{ item.product }}</th>
+                    <td> {{ item.seller }} </td>
+                    <td> {{ item.price }} </td>
+                    <td> {{ item.quantity }} </td>
+                    <td> {{ item.street }} </td>
+                    <td> {{ item.city }} </td>
+                    <td> {{ item.state }} </td>
+                    <td> {{ item.zip }} </td>
+                    <td> {{ item.country }} </td>
+                    <td> <a href="/buy/{{ item.id }}">Select</a> </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    </div>
 
     {% endblock %}
   </body>

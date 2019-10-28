@@ -1,152 +1,134 @@
 import time
-from pprint import pprint
+import numpy as np
+import copy
 
 import easypost
 easypost.api_key = 'EZTK21fb019004dc4e16883b0e3931a890fbHKlpAlwhJVFj9xKF3ES3qA'
+import googlemaps
+gmaps = googlemaps.Client(key='AIzaSyDZ4CKmUWDamVjSONXT4zEV6Rhj0roFdDU')
 
-class Address(object):
-    def __init__(self, street, city, state, zip, country, verify=True,
-            address=None):
-        self.street = street
-        self.city = city
-        self.state = state
-        self.zip = zip
-        self.country = country
+class Option:
+    def __init__(self, product, seller, price, address, distance):
+        self.product = product
+        self.seller = seller
+        self.price = price
+        self.address = address
+        self.distance = distance
+        self.rate = None
+        self.delivery = None
+        self.service = None
+        self.score = None
 
-        if address:
-            self.address = address
-        else:
-            if verify:
-                try:
-                    self.address = easypost.Address.create(
-                        verify_strict=['delivery'],
-                        street1=street,
-                        city=city,
-                        state=state,
-                        zip=zip,
-                        country=country,
-                    )
-                except easypost.Error as e:
-                    raise ValueError(e.http_body)
-            else:
-                self.address = easypost.Address.create(
-                    street1=street,
-                    city=city,
-                    state=state,
-                    zip=zip,
-                    country=country,
-                )
+    def set_shipping(self, rate, delivery, service):
+        self.rate = rate
+        self.delivery = delivery
+        self.service = service
 
-    @classmethod
-    def from_id(cls, id):
-        address = easypost.Address.retrieve(id)
-        obj = cls(
-            address['street1'],
-            address['city'],
-            address['state'],
-            address['zip'],
-            address['country'],
-            address=address
-        )
-        return obj
+    def set_score(self, score):
+        self.score = score
 
-    def get_id(self):
-        return self.address['id']
+def get_shipping_options(buyer, items, check_n=3):
+    shipping_options = []
 
-class Parcel(object):
-    def __init__(self, length, width, height, weight, parcel=None):
-        self.length = length
-        self.width = width
-        self.height = height
-        self.weight = weight
+    from_address_list = [f'{it.street}, {it.city}, ' \
+        f'{it.state}, {it.zip}, {it.country}' for it in items]
 
-        if parcel:
-            self.parcel = parcel
-        else:
-            self.parcel = easypost.Parcel.create(
-                length=length,
-                width=width,
-                height=height,
-                weight=weight
-            )
+    if buyer:
+        to_address = f'{buyer.street}, {buyer.city}, ' \
+            f'{buyer.state}, {buyer.zip}, {buyer.country}'
+        distances = get_distance(from_address_list, to_address)
+    else:
+        distances = [None for _ in items]
 
-    @classmethod
-    def from_id(cls, id):
-        parcel = easypost.Parcel.retrieve(id)
-        obj = cls(
-            parcel['length'],
-            parcel['width'],
-            parcel['height'],
-            parcel['weight'],
-            parcel=parcel
-        )
-        return obj
+    for it, from_address, dist in zip(items, from_address_list, distances):
+        option = Option(it.product, it.seller, it.price, from_address, dist)
+        shipping_options.append(option)
 
-    def get_id(self):
-        return self.parcel['id']
+    if buyer:
+        sorted_options = [shipping_options[i] for i in np.argsort(distances)]
 
-class Shipment(object):
-    def __init__(self, to_address, from_address, parcel, customs_info=None,
-            shipment=None):
-        self.to_address = to_address
-        self.from_address = from_address
-        self.parcel = parcel
-        self.customs_info = customs_info
+        deep_estimates = []
+        scores = []
+        for i in range(check_n):
+            for rate in get_shipment(sorted_options[i].address, to_address):
+                estimate = copy.copy(sorted_options[i])
+                estimate.set_shipping(
+                    rate['cost'],
+                    rate['delivery'],
+                    rate['service'])
+                score = score_function(rate['cost'], rate['delivery'])
+                estimate.set_score(score)
+                deep_estimates.append(estimate)
+                scores.append(score)
 
-        if shipment:
-            self.shipment = shipment
-        else:
-            self.shipment = easypost.Shipment.create(
-              to_address=to_address.address,
-              from_address=from_address.address,
-              parcel=parcel.parcel,
-              customs_info=customs_info
-            )
+        print(scores)
+        deep_estimates = [deep_estimates[i] for i in np.argsort(scores)]
+        sorted_options = deep_estimates + sorted_options[check_n:]
+    else:
+        sorted_options = shipping_options
 
-    @classmethod
-    def from_id(cls, id):
-        shipment = easypost.Shipment.retrieve(id)
-        to_address = Address.from_id(shipment['to_address']['id'])
-        from_address = Address.from_id(shipment['from_address']['id'])
-        parcel = Parcel.from_id(shipment['parcel']['id'])
+    return sorted_options
 
-        obj = cls(
-            to_address,
-            from_address,
-            parcel,
-            shipment['customs_info'],
-            shipment=shipment
-        )
-        return obj
+def get_distance(from_address_list, to_address):
+    # We assign to_address as origin and from_address as destination for convenience
+    # Assume distance is same to and from
+    # Return: list of distances in km
+    output = gmaps.distance_matrix(to_address, from_address_list)\
+        ['rows'][0]['elements']
+    distances = [x['distance']['value'] / 1000. for x in output]
+    return distances
 
-    def get_id(self):
-        return self.shipment['id']
+def get_shipment(from_address, to_address):
+    """
+    Get shipping rate and delivery time estimates
+    Warning: SLOW (about 1s)
+    """
+    from_address = from_address.split(', ')
+    from_address = easypost.Address.create(
+        verify_strict=['delivery'],
+        street1=from_address[0],
+        city=from_address[1],
+        state=from_address[2],
+        zip=from_address[3],
+        country=from_address[4],
+    )
 
-    def get_rates(self, regenerate=False):
-        if regenerate:
-            self.shipment = self.shipment.get_rates()
+    to_address = to_address.split(', ')
+    to_address = easypost.Address.create(
+        verify_strict=['delivery'],
+        street1=to_address[0],
+        city=to_address[1],
+        state=to_address[2],
+        zip=to_address[3],
+        country=to_address[4],
+    )
 
-        rates = []
-        for rate in self.shipment['rates']:
-            rates.append({
-                'carrier' : rate['carrier'],
-                'currency' : rate['currency'],
-                'cost' : rate['rate'],
-                'delivery' : rate['delivery_days'],
-                'service' : rate['service']
-            })
-        return rates
+    parcel = easypost.Parcel.create(
+        length=10,
+        width=10,
+        height=10,
+        weight=10
+    )
 
-shipment = Shipment(
-    to_address=Address('1415 North Ave', 'Bridgeport', 'CT', '06604', 'US'),
-    from_address = Address('15 Prospect Street', 'New Haven', 'CT', '06511', 'US'),
-    parcel = Parcel(10, 10, 10, 10)
-)
-pprint(shipment.get_rates())
+    shipment = easypost.Shipment.create(
+        to_address=to_address,
+        from_address=from_address,
+        parcel=parcel,
+    )
 
-# print(shipment.get_id())
+    rates = []
+    for rate in shipment['rates']:
+        rates.append({
+            'carrier' : rate['carrier'],
+            'currency' : rate['currency'],
+            'cost' : float(rate['rate']),
+            'delivery' : float(rate['delivery_days']) \
+                if rate['delivery_days'] else None,
+            'service' : rate['service']
+        })
+    return rates
 
-# start = time.time()
-# shipment = Shipment.from_id('shp_645d40b4718842bc866a91d5f0a9c2b9')
-# print(time.time() - start)
-# print(shipment.get_rates())
+def score_function(rate, delivery):
+    if rate is None or delivery is None:
+        return np.inf
+    return np.round((rate**0.6)* (delivery**0.4), decimals=2)
