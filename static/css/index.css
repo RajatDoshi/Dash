@@ -1,0 +1,22 @@
+/* body {
+    background-image: url(https://wallpaperplay.com/walls/full/9/b/7/121403.jpg) no-repeat;
+    background-
+} */
+
+h1 > a{
+  color : lightblue;!important
+}
+
+#titlecolor{
+  color : black;
+}
+#users{
+  color:black;
+}
+
+.nav-link{
+  color: lightblue; !important
+}
+.nav-blank {
+  background-color : chartreuse;
+}

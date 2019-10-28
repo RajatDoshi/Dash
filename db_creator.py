@@ -6,29 +6,6 @@ from sqlalchemy.orm import relationship, backref
 engine = create_engine('sqlite:///data.db', echo=True)
 Base = declarative_base()
 
-class Artist(Base):
-    __tablename__ = "artists"
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-
-    def __repr__(self):
-        return "{}".format(self.name)
-
-class Album(Base):
-    """"""
-    __tablename__ = "albums"
-
-    id = Column(Integer, primary_key=True)
-    title = Column(String)
-    release_date = Column(String)
-    publisher = Column(String)
-    media_type = Column(String)
-
-    artist_id = Column(Integer, ForeignKey("artists.id"))
-    artist = relationship("Artist", backref=backref(
-        "albums", order_by=id))
-
 class User(Base):
     __tablename__ = "users"
 
@@ -41,6 +18,9 @@ class User(Base):
     country = Column(String)
     user_type = Column(String)
 
+    items = relationship('Item', backref='User',
+        cascade='all, delete-orphan', lazy='dynamic')
+
 class Product(Base):
     __tablename__ = "products"
 
@@ -52,19 +32,20 @@ class Product(Base):
     length = Column(Float)
     weight = Column(Float)
 
+    # Defining One to Many relationships with the relationship function on the Parent Table
+    items = relationship('Item', backref='Product',
+        cascade='all, delete-orphan', lazy='dynamic')
+
 class Item(Base):
     __tablename__ = "items"
 
     id = Column(Integer, primary_key=True)
 
-    # product_id = Column(Integer, ForeignKey("products.id"))
-    # product = relationship("Product", backref=backref(
-    #     "items", order_by=id))
-    #
-    # seller_id = Column(Integer, ForeignKey("users.id"))
-    # seller = relationship("User", backref=backref(
-    #     "items", order_by=id))
+    # Defining the Foreign Key on the Child Table
+    product_id = Column(Integer, ForeignKey('products.id'))
     product = Column(String)
+
+    seller_id = Column(Integer, ForeignKey('users.id'))
     seller = Column(String)
 
     price = Column(Float)

@@ -1,27 +1,68 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" class="gr__127_0_0_1" style="
+    background-image: url(https://wallpaperplay.com/walls/full/9/b/7/121403.jpg);
+    background-position: center center;
+    background-attachment:fixed;
+    background-size: cover;
+    ">
+
  <head>
    <meta charset="utf-8">
+   <meta name="viewport" content="wid th=device-width, initial-scale=1">
    <title>Dash Fulfillment</title>
-   <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'index.css')}}">
+
  </head>
  <body>
+
     <header>
-      <div class="container">
-        <h1 class="logo">Dash Fulfillment</h1>
-        <strong>Navigation<nav>
-          <ul class="menu">
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('user_index') }}">Users</a></li>
-            <li><a href="{{ url_for('sell') }}">Sell</a></li>
-            <li><a href="{{ url_for('buy') }}">Buy</a></li>
-          </ul>
-        </nav></strong>
+      <div class="container-fluid">
+        <!-- <h1>Yhack Fulfillment</h1> -->
+
+        <strong>
+          <!-- <nav>
+                  <ul class="menu">
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('user_index') }}">Users</a></li>
+                    <li><a href="{{ url_for('sell') }}">Sell</a></li>
+                    <li><a href="{{ url_for('buy') }}">Buy</a></li>
+                  </ul>
+                </nav>
+
+ -->
+
+          <nav class="navbar navbar-toggler navbar-light bg-light">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <!-- <h1 class="navbar-brand " href="{{ url_for('index') }}" id = "titlecolor">Yhack fullfillment</h1> -->
+                <h1><a href = "/"> Dash Fulfillment</a></h1>
+              </div>
+              <ul class="nav nav-fill">
+                <li class="nav-item" >
+                  <a class="nav-link active" href="{{ url_for('user_index') }}">Users</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link active" href="{{ url_for('sell') }}">Sell</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="{{ url_for('buy') }}">Buy</a>
+                </li>
+                <li class = "nav-item">
+                  <a class = "nav-link acitve" href = "{{ url_for('index') }}">Login</a>
+
+              </ul>
+            </div>
+          </nav>
+
+      </strong>
       </div>
     </header>
 
     {% block content %}
     {% endblock %}
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+       <script src="js/bootstrap.min.js"></script>
  </body>
 </html>

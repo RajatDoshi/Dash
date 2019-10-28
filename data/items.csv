@@ -1,0 +1,287 @@
+,product,seller,price
+0,Bean bag,Haley,26.18
+1,Couch,Haley,17.8
+2,Bar Stool,Haley,14.32
+3,Fauteuil,Haley,45.12
+4,Bean bag,Sallee,47.92
+5,Ottoman,Sallee,10.54
+6,Bean bag,Meade,45.08
+7,Bar Stool,Meade,40.71
+8,Stool,Meade,42.79
+9,Recliner,Fawnia,38.31
+10,Tuffet,Fawnia,12.07
+11,Bar chair,Fawnia,25.72
+12,Footstool or ottoman,Jaquenetta,51.43
+13,Bean bag,Jaquenetta,32.87
+14,Couch,Jaquenetta,18.89
+15,Chair,Jaquenetta,57.43
+16,Chair,Bridgette,26.8
+17,Accubita,Bridgette,12.03
+18,Stool,Bridgette,30.72
+19,Klinai,Bridgette,56.99
+20,Footstool or ottoman,Carma,30.14
+21,Canapé,Carma,18.87
+22,Couch,Carma,27.41
+23,Rocking chair,Carma,44.74
+24,Fainting couch,Augustine,22.55
+25,Accubita,Augustine,43.22
+26,Bar chair,Augustine,12.98
+27,Rocking chair,Augustine,25.79
+28,Bar Stool,Charlean,11.06
+29,Bench,Charlean,48.95
+30,Accubita,Charlean,28.42
+31,Rocking chair,Charlean,37.77
+32,Ottoman,Nicoline,23.27
+33,Bean bag,Nicoline,42.05
+34,Chaise longue,Nicoline,26.22
+35,Klinai,Nicoline,48.33
+36,Bar chair,Gilly,34.69
+37,Fainting couch,Gilly,54.51
+38,Stool,Gilly,39.88
+39,Bean bag,Gilly,20.33
+40,Bar chair,Elnore,32.24
+41,Chaise longue,Elnore,57.46
+42,Bar Stool,Elnore,55.54
+43,Couch,Elnore,19.51
+44,Bar Stool,Annabal,56.15
+45,Canapé,Annabal,30.75
+46,Couch,Melinde,11.65
+47,Recliner,Melinde,12.16
+48,Ottoman,Melinde,53.15
+49,Chair,Cariotta,53.86
+50,Rocking chair,Cariotta,18.81
+51,Bar Stool,Cariotta,12.92
+52,Stool,Toby,38.84
+53,Canapé,Toby,50.78
+54,Davenport,Toby,34.65
+55,Fauteuil,Toby,35.79
+56,Stool,Kathye,14.36
+57,Rocking chair,Kathye,42.18
+58,Fauteuil,Kathye,50.52
+59,Footstool or ottoman,Florri,44.41
+60,Ottoman,Florri,38.47
+61,Stool,Florri,58.16
+62,Davenport,Eba,55.34
+63,Bean bag,Eba,53.13
+64,Tuffet,Eba,43.87
+65,Fainting couch,Ilyse,15.73
+66,Recliner,Ilyse,18.32
+67,Tuffet,Ilyse,27.98
+68,Chair,Gilemette,36.84
+69,Accubita,Gilemette,37.69
+70,Fauteuil,Gilemette,31.71
+71,Klinai,Gilemette,18.47
+72,Chaise longue,Phyllida,40.12
+73,Footstool or ottoman,Phyllida,32.47
+74,Couch,Katina,36.84
+75,Tuffet,Katina,29.06
+76,Footstool or ottoman,Katina,22.72
+77,Fainting couch,Katina,31.67
+78,Klinai,Antonella,21.08
+79,Canapé,Antonella,46.4
+80,Bench,Antonella,19.54
+81,Chaise longue,Maria,56.54
+82,Fainting couch,Maria,14.95
+83,Recliner,Maria,21.68
+84,Tuffet,Daffy,21.01
+85,Bench,Daffy,37.57
+86,Recliner,Daffy,31.47
+87,Bench,Franciska,34.95
+88,Couch,Franciska,19.39
+89,Footstool or ottoman,Franciska,18.01
+90,Fainting couch,Amata,37.59
+91,Klinai,Amata,38.67
+92,Fainting couch,Carilyn,23.01
+93,Canapé,Carilyn,35.37
+94,Lift chair,Carilyn,30.32
+95,Bench,Emelina,38.5
+96,Tuffet,Emelina,24.97
+97,Ottoman,Emelina,13.27
+98,Recliner,Barbee,39.42
+99,Footstool or ottoman,Barbee,55.67
+100,Bar Stool,Merrilee,30.06
+101,Klinai,Merrilee,45.14
+102,Bench,Kat,26.49
+103,Bar chair,Kat,33.54
+104,Tuffet,Kat,13.59
+105,Footstool or ottoman,Aurora,22.0
+106,Davenport,Aurora,38.43
+107,Chaise longue,Aurora,49.34
+108,Chair,Dori,55.13
+109,Chaise longue,Dori,37.31
+110,Chair,Mala,44.24
+111,Stool,Mala,54.94
+112,Chaise longue,Mala,15.79
+113,Fainting couch,Mala,11.43
+114,Chair,Nance,28.58
+115,Fauteuil,Nance,42.87
+116,Bar Stool,Gusella,24.73
+117,Ottoman,Gusella,58.05
+118,Tuffet,Tabby,15.54
+119,Bar Stool,Tabby,59.39
+120,Davenport,Tabby,54.9
+121,Bar chair,Dorree,23.01
+122,Bean bag,Dorree,56.5
+123,Lift chair,Cecelia,56.13
+124,Fauteuil,Cecelia,16.85
+125,Chaise longue,Ingaborg,18.34
+126,Bar chair,Ingaborg,52.69
+127,Fauteuil,Ingaborg,16.23
+128,Couch,Frederica,51.58
+129,Bench,Frederica,41.66
+130,Rocking chair,Frederica,36.92
+131,Stool,Lurette,30.49
+132,Bar Stool,Lurette,47.13
+133,Bar chair,Lurette,39.86
+134,Lift chair,Lurette,40.93
+135,Bean bag,Norma,26.52
+136,Davenport,Norma,42.07
+137,Bar chair,Norma,43.56
+138,Lift chair,Cyndi,43.4
+139,Bar Stool,Cyndi,43.96
+140,Ottoman,Cyndi,12.6
+141,Bar Stool,Charla,28.72
+142,Footstool or ottoman,Charla,37.11
+143,Tuffet,Sophronia,17.91
+144,Chaise longue,Sophronia,46.93
+145,Bean bag,Sophronia,24.75
+146,Ottoman,Sophronia,54.14
+147,Canapé,Garnette,12.8
+148,Rocking chair,Garnette,16.7
+149,Bar chair,Hanni,22.67
+150,Klinai,Hanni,27.66
+151,Chair,Hanni,40.89
+152,Chair,Ediva,27.86
+153,Lift chair,Ediva,26.19
+154,Canapé,Ediva,47.0
+155,Klinai,Ediva,28.62
+156,Chaise longue,Vicki,51.16
+157,Accubita,Vicki,14.23
+158,Accubita,Wendi,24.11
+159,Couch,Wendi,20.28
+160,Stool,Wendi,17.99
+161,Chaise longue,Rickie,24.86
+162,Rocking chair,Rickie,20.82
+163,Bench,Rickie,18.26
+164,Recliner,Annelise,50.82
+165,Canapé,Annelise,22.42
+166,Chair,Dido,26.04
+167,Bar Stool,Dido,15.35
+168,Bean bag,Dido,10.48
+169,Lift chair,Dido,59.8
+170,Klinai,Paige,13.86
+171,Accubita,Paige,26.14
+172,Recliner,Zorine,28.64
+173,Klinai,Zorine,18.07
+174,Davenport,Zorine,13.62
+175,Accubita,Chrissie,21.49
+176,Lift chair,Chrissie,12.96
+177,Tuffet,Cori,56.42
+178,Stool,Cori,45.23
+179,Chaise longue,Cori,28.94
+180,Bean bag,Selle,24.81
+181,Fauteuil,Selle,47.21
+182,Footstool or ottoman,Nicola,48.06
+183,Fauteuil,Nicola,40.95
+184,Klinai,Lisha,12.68
+185,Fainting couch,Lisha,30.01
+186,Rocking chair,Lisha,37.0
+187,Tuffet,Lucilia,19.2
+188,Accubita,Lucilia,42.67
+189,Stool,Lucilia,29.94
+190,Bar chair,Lucilia,28.72
+191,Bench,Yolanthe,36.05
+192,Footstool or ottoman,Yolanthe,54.21
+193,Fainting couch,Yolanthe,59.64
+194,Ottoman,Doretta,21.28
+195,Klinai,Doretta,28.33
+196,Fainting couch,Madlin,41.72
+197,Recliner,Madlin,51.57
+198,Canapé,Miguela,17.26
+199,Fainting couch,Miguela,37.59
+200,Davenport,Elita,14.1
+201,Bar chair,Elita,33.8
+202,Klinai,Jacquie,42.37
+203,Bean bag,Jacquie,39.93
+204,Canapé,Hannah,31.37
+205,Accubita,Hannah,30.71
+206,Canapé,Consolata,44.85
+207,Footstool or ottoman,Consolata,43.04
+208,Bar Stool,Veronike,15.49
+209,Couch,Veronike,18.07
+210,Bar chair,Vanny,20.84
+211,Bar Stool,Vanny,58.38
+212,Bar Stool,Rois,45.78
+213,Bar chair,Rois,13.38
+214,Couch,Staci,54.36
+215,Klinai,Staci,31.25
+216,Lift chair,Staci,21.12
+217,Footstool or ottoman,Issi,24.66
+218,Couch,Issi,33.64
+219,Accubita,Issi,31.14
+220,Canapé,Issi,28.88
+221,Accubita,Freddi,27.33
+222,Rocking chair,Freddi,50.49
+223,Lift chair,Liuka,12.74
+224,Recliner,Liuka,13.37
+225,Bar Stool,Liuka,39.88
+226,Chair,Liuka,15.82
+227,Bean bag,Fawne,24.07
+228,Fainting couch,Fawne,54.81
+229,Lift chair,Fawne,11.35
+230,Klinai,Fawne,46.26
+231,Accubita,Carolee,54.04
+232,Lift chair,Carolee,46.99
+233,Tuffet,Carolee,21.75
+234,Bean bag,Carolee,31.82
+235,Stool,Chloette,47.44
+236,Bench,Chloette,58.69
+237,Bar Stool,Pat,30.27
+238,Chair,Pat,53.3
+239,Bean bag,Pat,58.88
+240,Tuffet,Pat,45.68
+241,Recliner,Sallyann,35.52
+242,Rocking chair,Sallyann,11.85
+243,Bar Stool,Christel,53.97
+244,Davenport,Christel,12.16
+245,Accubita,Penelopa,27.95
+246,Fauteuil,Penelopa,33.72
+247,Lift chair,Penelopa,45.49
+248,Davenport,Billie,13.09
+249,Bench,Billie,35.69
+250,Rocking chair,Annora,12.01
+251,Accubita,Annora,45.51
+252,Klinai,Annora,35.18
+253,Stool,Annora,12.92
+254,Canapé,Darice,24.27
+255,Bean bag,Darice,52.31
+256,Bench,Darice,27.61
+257,Stool,Gunilla,49.44
+258,Klinai,Gunilla,45.46
+259,Bar chair,Gunilla,17.82
+260,Bench,Laryssa,13.73
+261,Chair,Laryssa,10.51
+262,Bean bag,Laryssa,28.94
+263,Stool,Laryssa,38.78
+264,Ottoman,Lisetta,22.33
+265,Rocking chair,Lisetta,59.36
+266,Fainting couch,Lisetta,16.89
+267,Tuffet,Kiele,46.1
+268,Fauteuil,Kiele,25.26
+269,Rocking chair,Silva,57.7
+270,Fauteuil,Silva,51.83
+271,Tuffet,Silva,43.03
+272,Recliner,Silva,42.53
+273,Fauteuil,Audrey,41.14
+274,Chaise longue,Audrey,42.76
+275,Ottoman,Audrey,48.81
+276,Lift chair,Guinna,19.52
+277,Recliner,Guinna,20.48
+278,Bench,Guinna,54.79
+279,Tuffet,Linda,41.97
+280,Bean bag,Linda,29.74
+281,Lift chair,Linda,31.72
+282,Davenport,Linda,57.85
+283,Chaise longue,Eveleen,19.23
+284,Stool,Eveleen,49.7
+285,Accubita,Eveleen,25.63

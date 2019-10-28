@@ -1,93 +1,18 @@
-from db_creator import Artist, Album, User, Product, Item
-from forms import MusicSearchForm, AlbumForm, UserForm, ProductForm, ProductSearchForm, ItemForm, ItemSearchForm
-from tables import Results, UserResults, ProductResults, ItemResults
+from db_creator import User, Product, Item
+from forms import UserForm, UserSearchForm, ProductForm, ProductSearchForm, ItemForm, ItemSearchForm
 from app import app
 from db_setup import init_db, db_session
+from shipping import get_shipping_options, get_shipment
 
 from flask import render_template, request, flash, redirect
+import numpy as np
 
 # init_db()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    search = MusicSearchForm(request.form)
-    if request.method == 'POST':
-        return search_results(search)
-
-    return render_template('index.html', form=search)
-
-@app.route('/results')
-def search_results(search):
-    results = []
-    search_string = search.data['search']
-
-    if search_string:
-        if search.data['select'] == 'Artist':
-            qry = db_session.query(Album, Artist).filter(
-                Artist.id==Album.artist_id).filter(
-                    Artist.name.contains(search_string))
-            results = [item[0] for item in qry.all()]
-        elif search.data['select'] == 'Album':
-            qry = db_session.query(Album).filter(
-                Album.title.contains(search_string))
-            results = qry.all()
-        elif search.data['select'] == 'Publisher':
-            qry = db_session.query(Album).filter(
-                Album.publisher.contains(search_string))
-            results = qry.all()
-        else:
-            qry = db_session.query(Album)
-            results = qry.all()
-    else:
-        qry = db_session.query(Album)
-        results = qry.all()
-
-    if not results:
-        flash('No results found!')
-        return redirect('/')
-    else:
-        # display results
-        table = Results(results)
-        table.border = True
-        return render_template('results.html', table=table)
-
-@app.route('/new_album', methods=['GET', 'POST'])
-def new_album():
-    """
-    Add a new album
-    """
-    form = AlbumForm(request.form)
-
-    if request.method == 'POST' and form.validate():
-        # save the album
-        album = Album()
-        save_changes(album, form, new=True)
-        flash('Album created successfully!')
-        return redirect('/')
-
-    return render_template('new_album.html', form=form)
-
-def save_changes(album, form, new=False):
-    """
-    Save the changes to the database
-    """
-    # Get data from form and assign it to the correct attributes
-    # of the SQLAlchemy table object
-    artist = Artist()
-    artist.name = form.artist.data
-
-    album.artist = artist
-    album.title = form.title.data
-    album.release_date = form.release_date.data
-    album.publisher = form.publisher.data
-    album.media_type = form.media_type.data
-
-    if new:
-        # Add the new album to the database
-        db_session.add(album)
-
-    # commit the data to the database
-    db_session.commit()
+    return render_template('index.html')
+    # str(len(db_session.query(Item).all()))
 
 @app.route('/users', methods=['GET', 'POST'])
 def user_index():
@@ -101,9 +26,9 @@ def user_index():
     qry = db_session.query(User)
     results = qry.all()
 
-    table = UserResults(results)
-    table.border = True
-    return render_template('users.html', table=table, form=form)
+    # table = UserResults(results)
+    # table.border = True
+    return render_template('users.html', results=results, form=form)
 
 def save_user(user, form, new=True):
     user.name = form.name.data
@@ -123,22 +48,45 @@ def sell():
     item_form = ItemForm(request.form)
 
     if request.method == 'POST' and item_form.validate():
-        item = Item()
-        save_item(item, item_form, new=True)
+        product_name = item_form.data['product']
+        product = db_session.query(Product).filter(
+            Product.name==product_name.lower()).first()
+
+        seller_name = item_form.data['seller']
+        seller = db_session.query(User).\
+            filter(User.name==seller_name.lower()).\
+            filter(User.user_type=='Seller').first()
+
+        if product and seller:
+            item = Item()
+            save_item(item, item_form, new=True)
+
+            # Add child to Product parent models
+            product.items.append(item)
+            seller.items.append(item)
+            db_session.commit()
+        else:
+            if not product:
+                flash('No products match "{}"'.format(product_name))
+            if not seller:
+                flash('No sellers match "{}"'.format(seller_name))
+
+            return redirect('/sell')
+
         flash('Item created successfully!')
         return redirect('/sell')
 
     product_results = db_session.query(Product).all()
-    product_table = ProductResults(product_results)
-    product_table.border = True
+    # product_table = ProductResults(product_results)
+    # product_table.border = True
 
-    item_results = db_session.query(Item).all()
-    item_table = ItemResults(item_results)
-    item_table.border = True
+    item_results = join_item_seller(db_session).all()
+    # item_table = ItemResults(item_results)
+    # item_table.border = True
 
     return render_template('sell.html',
-        product_table=product_table,
-        item_table=item_table,
+        product_results=product_results,
+        item_results=item_results,
         item_form=item_form)
 
 @app.route('/sell/new_product', methods=['GET', 'POST'])
@@ -158,8 +106,8 @@ def new_product():
     return render_template('new_product.html', form=form)
 
 def save_product(product, form, new=True):
-    product.name = form.name.data
-    product.category = form.category.data
+    product.name = form.name.data.lower()
+    product.category = form.category.data.lower()
     product.width = form.width.data
     product.height = form.height.data
     product.length = form.length.data
@@ -182,7 +130,7 @@ def save_item(item, form, new=True):
     db_session.commit()
 
 @app.route('/buy', methods=['GET', 'POST'])
-def buy():
+def buy(top_n=20):
     search = ItemSearchForm(request.form)
 
     if request.method == 'POST':
@@ -190,23 +138,74 @@ def buy():
         search_string = search.data['search']
 
         if search_string:
-            qry = db_session.query(Item).filter(
+            qry = join_item_seller(db_session).filter(
                     Item.product.contains(search_string))
+            all_results = qry.all()
+            results = get_top_items_by_price(all_results, top_n=top_n)
         else:
-            qry = db_session.query(Item)
-
-        results = qry.all()
+            results = all_results = join_item_seller(db_session).all()
 
         if not results:
             flash('No items found!')
             return redirect('/buy')
     else:
-        results = db_session.query(Item).all()
+        results = all_results = join_item_seller(db_session).all()
 
-    table = ItemResults(results)
-    table.border = True
+    # table = ItemResults(results)
+    # table.border = True
 
-    return render_template('buy.html', table=table, form=search)
+    return render_template('buy.html', items=results, form=search,
+        top_results=len(results), total_results=len(all_results))
+
+def join_item_seller(db_session):
+    return db_session.query(Item).\
+        join(User, User.id==Item.seller_id).\
+        with_entities(Item.id, Item.product,
+            Item.seller, Item.price, Item.quantity,
+            User.street.label('street'), User.city.label('city'),
+            User.state.label('state'), User.zip.label('zip'),
+            User.country.label('country'))
+
+def get_top_items_by_price(results, top_n=20):
+    prices = [it.price for it in results]
+    sorted_results = [results[i] for i in np.argsort(prices)]
+    return sorted_results[:top_n]
+
+@app.route('/buy/<int:id>', methods=['GET', 'POST'])
+def optimize(id):
+    search = UserSearchForm(request.form)
+    # item = db_session.query(Item).get(id)
+    item = join_item_seller(db_session).filter(Item.id==id).first()
+
+    if request.method == 'POST':
+        buyer_name = search.data['search']
+        buyer = db_session.query(User).\
+            filter(User.name==buyer_name.lower()).\
+            filter(User.user_type=='Buyer').first()
+
+        if buyer:
+            baseline_rates = get_shipment(
+                from_address=f'{item.street}, {item.city}, ' \
+                    f'{item.state}, {item.zip}, {item.country}',
+                to_address=f'{buyer.street}, {buyer.city}, ' \
+                    f'{buyer.state}, {buyer.zip}, {buyer.country}')
+
+            similar_items = join_item_seller(db_session).filter(
+                    Item.product.contains(item.product)).all()
+            results = get_shipping_options(buyer=buyer, items=similar_items)
+        else:
+            flash('Invalid buyer! Please register before placing any orders!')
+            return redirect(f'/buy/{id}')
+    else:
+        baseline_rates = []
+        similar_items = join_item_seller(db_session).filter(
+                Item.product.contains(item.product))
+        results = get_shipping_options(buyer=None, items=similar_items)
+
+    return render_template('optimize.html',
+        results=results,
+        form=search,
+        baseline_rates=baseline_rates)
 
 if __name__ == '__main__':
     app.run(debug=True)

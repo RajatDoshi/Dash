@@ -30,3 +30,10 @@ https://www.easypost.com/docs/api
 
 Address data:
 https://gist.github.com/HeroicEric/1102788
+
+Database and Forms:
+https://www.blog.pythonlibrary.org/2017/12/15/flask-101-filtering-searches-and-deleting-data/
+https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#querying-records
+
+Database linking:
+https://techarena51.com/blog/one-to-many-relationships-with-flask-sqlalchemy/

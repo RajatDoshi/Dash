@@ -1,32 +1,76 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" class="gr__127_0_0_1" style="
+    background-image: url(https://wallpaperplay.com/walls/full/9/b/7/121403.jpg);
+    background-position: center center;
+    background-attachment:fixed;
+    background-size:cover;
+    ">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Users</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'index.css')}}">
+
   </head>
   <body>
     {% extends "template.html" %}
     {% block content %}
 
-    <h1>Users Page</h1>
+    <div class="info" style="padding-left: 10%; padding-right: 10%; padding-top : 5%; padding-bottom : 5%;">
 
-    <h4>Create User</h4>
+      <h4>Create User</h4>
 
-    {% from "_formhelpers.html" import render_field %}
-    <form method=post>
-        <dl>
-            {{ render_field(form.name) }}
-            {{ render_field(form.street) }}
-            {{ render_field(form.city) }}
-            {{ render_field(form.state) }}
-            {{ render_field(form.country) }}
-            {{ render_field(form.user_type) }}
-        </dl>
-        <p><input type=submit value=Submit>
-    </form>
+      {% from "_formhelpers.html" import render_field %}
+      <form method=post>
+          <dl>
+              {{ render_field(form.name) }}
+              {{ render_field(form.street) }}
+              {{ render_field(form.city) }}
+              {{ render_field(form.state) }}
+              {{ render_field(form.zip) }}
+              {{ render_field(form.country) }}
+              {{ render_field(form.user_type) }}
+          </dl>
+          <p><button class="btn btn-primary" type="submit">Submit</button>
+      </form>
 
-    <h4>Users List</h4>
-    {{ table }}
+      <br><br>
+
+      <h4>Users List</h4>
+
+      <div class="table-responsive">
+        <table class="table" id="users">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Street</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                    <th scope="col">ZIP</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">User Type</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in results %}
+                <tr id={{ user.id }}>
+                    <th scope="row">{{ user.name }}</th>
+                    <td> {{ user.street }} </td>
+                    <td> {{ user.city }} </td>
+                    <td> {{ user.state }} </td>
+                    <td> {{ user.zip }} </td>
+                    <td> {{ user.country }} </td>
+                    <td> {{ user.user_type }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    </div>
 
     {% endblock %}
   </body>
