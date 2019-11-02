@@ -1,22 +1,30 @@
-DashProject
+# DashProject
 
-Flask setup:
-https://opensource.com/article/18/4/flask
+Our project aims to coordinate the exchange of common goods between small businesses to optimize shipping times for consumers. The application utilizes Python Flask and SQL. We design a ranking algorithm that factors in delivery time and shipping rate in order to determine the optimal shipping option. To determine delivery time and shipping rate, we integrate the EasyPost API. We optimize the ranking process by preprocessing shipping locations according to distances estimated using the Distance Matrix API (Google Maps Platform).
 
-Put this in the .bash_rc file in order to locate the module
+## User Page
 
-```
-# in your activate script, probably at the bottom (but anywhere will do)
+![users](screenshots/users.png)
 
-export FLASK_APP=$VIRTUAL_ENV/../todo/app.py
-export DEBUG='True'
-```
+## Sell Page
+
+![users](screenshots/sell.png)
+
+## Buy Page
+
+![users](screenshots/buy-1.png)
+![users](screenshots/buy-2.png)
 
 Run server locally:
 
 ```
 FLASK_APP=main.py flask run
 ```
+
+## Docs
+
+Flask setup:
+https://opensource.com/article/18/4/flask
 
 Starter:
 https://www.freecodecamp.org/news/how-to-build-a-web-application-using-flask-and-deploy-it-to-the-cloud-3551c985e492/
